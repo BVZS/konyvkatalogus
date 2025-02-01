@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class BookMenu {
-    private static Database databaseController;
+    private static Database databaseController = new Database();
     private static Scanner scanner = new Scanner(System.in);
     private static BookCatalog catalog = new BookCatalog();
 
@@ -51,7 +51,7 @@ public class BookMenu {
                     loadFromFile();
                     break;
                 case 7:
-                    //saveToDatabase();
+                    saveToDatabase();
                     break;
                 case 8:
                     System.out.println("Kilépés...");
@@ -138,14 +138,31 @@ public class BookMenu {
     private static void loadFromFile() {
         System.out.println("Írd be a fájl pontos nevét a betöltéshez:");
         String fileName = scanner.nextLine();
-
         try {
             catalog.loadFromTextFile(fileName);
-            System.out.println("Könyvek betöltése sikeresen megtörtént.");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        System.out.println("Könyvek betöltése sikeresen megtörtént.");
     }
+
+    private static void saveToDatabase() {
+        if (catalog.getList().isEmpty()) {
+            System.out.println("Nincsenek könyvek.");
+        } else {
+            for (Book book : catalog.getList()) {
+                try {
+                    databaseController.saveBook(book);
+                    System.out.println("A könyvek elmentve az adatbázisba.");
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+    }
+
+
+
 
     private static void menuString() {
         System.out.println("\nFőmenü:");
@@ -161,7 +178,6 @@ public class BookMenu {
     }
 
     private static void login() {
-        databaseController = new Database();
         try {
             databaseController.connect();
             Scanner scanner = new Scanner(System.in);
