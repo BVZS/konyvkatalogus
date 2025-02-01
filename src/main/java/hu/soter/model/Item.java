@@ -1,4 +1,4 @@
-package hu.soter.modell;
+package hu.soter.model;
 
 import java.util.Random;
 

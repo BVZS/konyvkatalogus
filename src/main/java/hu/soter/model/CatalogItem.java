@@ -1,4 +1,4 @@
-package hu.soter.modell;
+package hu.soter.model;
 
 public interface CatalogItem {
     int getId();

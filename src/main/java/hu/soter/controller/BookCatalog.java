@@ -1,6 +1,6 @@
 package hu.soter.controller;
 
-import hu.soter.modell.Book;
+import hu.soter.model.Book;
 
 import java.io.*;
 import java.util.*;
