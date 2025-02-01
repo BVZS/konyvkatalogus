@@ -5,7 +5,10 @@ import hu.soter.controller.Database;
 import hu.soter.model.Book;
 import hu.soter.model.User;
 
+import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
@@ -42,7 +45,7 @@ public class BookMenu {
                     searchBook();
                     break;
                 case 5:
-                    //saveToFile();
+                    saveToFile();
                     break;
                 case 6:
                     //loadFromFile();
@@ -112,6 +115,24 @@ public class BookMenu {
         System.out.println("Írd be a könyv szerzőjét vagy címét, amit keresel:");
         String search = scanner.nextLine();
         catalog.searchBooks(search);
+    }
+
+    private static void saveToFile() {
+        if (catalog.getList().isEmpty()) {
+            System.out.println("Nincsenek könyvek.");
+        } else {
+            String pattern = "yyyyMMdd_HHmmss";// ÉÉÉÉHHNN_ÓÓPPSS
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+            String date = simpleDateFormat.format(new Date());
+
+            String fileName = "books_" + date + ".txt";
+            System.out.println("A könyvek elmentve egy '"+ fileName +"' nevű fájlba.");
+            try {
+                catalog.saveToTextFile(fileName);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     private static void menuString() {
