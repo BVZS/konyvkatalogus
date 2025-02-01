@@ -18,6 +18,14 @@ public class Book extends Item implements Serializable {
         this.price = 0.0;
     }
 
+    /**
+     * Könyv létrehozása.
+     *
+     * @param title: a köny címe
+     * @param authors: a könyv szerzője (lehet több is)
+     * @param publicationYear: a könyv megjelenésének éve
+     * @param price: a könyv ára forintban
+     */
     public Book(String title, Set<String> authors, int publicationYear, double price) {
         super(title);
         this.authors = authors;
@@ -37,6 +45,11 @@ public class Book extends Item implements Serializable {
         return price;
     }
 
+    /**
+     * Könyvhöz való hasonlítás.
+     *
+     * @param other: egy másik Book objektum
+     */
     @Override
     public int compareTo(Book other) {
         return this.title.compareTo(other.title);

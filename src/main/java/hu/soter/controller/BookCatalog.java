@@ -12,24 +12,47 @@ public class BookCatalog {
         this.list = new ArrayList<>();
     }
 
+    /**
+     * Könyvek tételes lekérdezése.
+     *
+     * @return A BookCatalog osztály listája.
+     */
     public ArrayList<Book> getList() {
         return new ArrayList<Book>(list);
     }
 
+    /**
+     * Új könyv hozzáadása a katalógushoz.
+     *
+     * @param book: Book objektum
+     */
     public void addBook(Book book) {
         list.add(book);
     }
 
+    /**
+     * Meglévő könyv törlése a katalógusból.
+     *
+     * @param id: a Book objektum egyedi azonosítója
+     */
     public void removeBook(int id) {
         list.removeIf(book -> book.getId() == id);
     }
 
+    /**
+     * A katalógus elemeinek konzolos kiírása.
+     */
     public void listBooks() {
         for (Book book : list) {
             book.toString();
         }
     }
 
+    /**
+     * Könyv keresése a katalógusban.
+     *
+     * @param search Keresési érték, lehet szerző vagy cím.
+     */
     public void searchBooks(String search) {
         List<Book> result = new ArrayList<>();
 
