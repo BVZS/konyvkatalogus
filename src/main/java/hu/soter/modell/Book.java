@@ -22,6 +22,18 @@ public class Book extends Item {
         this.price = price;
     }
 
+    public Set<String> getAuthors() {
+        return authors;
+    }
+
+    public int getPublicationYear() {
+        return publicationYear;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
     @Override
     public String toString() {
         return "Book{" +
