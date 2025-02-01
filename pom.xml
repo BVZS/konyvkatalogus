@@ -22,12 +22,13 @@
             <version>8.0.33</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/at.favre.lib/bcrypt -->
+        <!-- https://mvnrepository.com/artifact/de.mkammerer/argon2-jvm -->
         <dependency>
-            <groupId>at.favre.lib</groupId>
-            <artifactId>bcrypt</artifactId>
-            <version>0.10.2</version>
+            <groupId>de.mkammerer</groupId>
+            <artifactId>argon2-jvm</artifactId>
+            <version>2.1</version>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>

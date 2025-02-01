@@ -1,6 +1,9 @@
 package hu.soter.model;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
+import de.mkammerer.argon2.Argon2;
+import de.mkammerer.argon2.Argon2Factory;
+
+import java.util.Arrays;
 
 public class User {
     private int id;
@@ -15,9 +18,10 @@ public class User {
         this.role = role;
     }
 
-    public static String hashPassword(String password) {
-        return BCrypt.withDefaults().hashToString(12, password.toCharArray());
-    }
+    /*public static String hashPassword(String password) {
+        Argon2 argon2 = Argon2Factory.create();
+        return argon2.hash(10, 65536, 1, Arrays.toString(password.getBytes()));
+    }*/
 
     public int getId() {
         return id;
