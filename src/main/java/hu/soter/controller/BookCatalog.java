@@ -44,7 +44,7 @@ public class BookCatalog {
      */
     public void listBooks() {
         for (Book book : list) {
-            book.toString();
+            System.out.println(book.toString());
         }
     }
 

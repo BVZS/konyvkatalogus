@@ -1,14 +1,19 @@
 package hu.soter;
 
+import hu.soter.controller.BookCatalog;
 import hu.soter.controller.Database;
+import hu.soter.model.Book;
 import hu.soter.model.User;
 
 import java.sql.SQLException;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class BookMenu {
     private static Database databaseController;
     private static Scanner scanner = new Scanner(System.in);
+    private static BookCatalog catalog = new BookCatalog();
 
     public static void load() {
         login();
@@ -21,20 +26,20 @@ public class BookMenu {
         while (choice != 8) {
             menuString();
             choice = scanner.nextInt();
-            scanner.nextLine(); // Clear buffer
+            scanner.nextLine();
 
             switch (choice) {
                 case 1:
                     addBook();
                     break;
                 case 2:
-                    //deleteBook();
+                    deleteBook();
                     break;
                 case 3:
-                    //listBooks();
+                    listBooks();
                     break;
                 case 4:
-                    //searchBook();
+                    searchBook();
                     break;
                 case 5:
                     //saveToFile();
@@ -52,6 +57,61 @@ public class BookMenu {
                     System.out.println("Érvénytelen választás, próbáld újra.");
             }
         }
+    }
+
+    private static void addBook() {
+        System.out.print("Add meg a könyv címét: ");
+        String title = scanner.nextLine();
+
+        Set<String> authors = new HashSet<>();
+        String author;
+        System.out.println("Add meg a könyv szerzőit (írd be a szerző nevét, majd nyomj Enter-t. Üss Entert, ha végeztél): ");
+        while (true) {
+            author = scanner.nextLine();
+            if (author.isEmpty()) {
+                break;
+            }
+            authors.add(author);
+        }
+
+        System.out.print("Add meg a könyv kiadási évét: ");
+        int year = scanner.nextInt();
+
+        System.out.print("Add meg a könyv árát: ");
+        int price = scanner.nextInt();
+        scanner.nextLine();
+
+        Book newBook = new Book(title, authors, year, price);
+        catalog.addBook(newBook);
+
+        System.out.println("Könyv hozzáadva: " + newBook);
+    }
+
+    private static void deleteBook() {
+        if (catalog.getList().isEmpty()) {
+            System.out.println("Nincsenek könyvek.");
+        } else {
+            System.out.println("Add meg a könyv ID-jét, amit törölni szeretnél:");
+            catalog.listBooks();
+
+            int id = scanner.nextInt();
+            scanner.nextLine();
+            catalog.removeBook(id);
+        }
+    }
+
+    private static void listBooks() {
+        if (catalog.getList().isEmpty()) {
+            System.out.println("Nincsenek könyvek.");
+        } else {
+            catalog.listBooks();
+        }
+    }
+
+    private static void searchBook() {
+        System.out.println("Írd be a könyv szerzőjét vagy címét, amit keresel:");
+        String search = scanner.nextLine();
+        catalog.searchBooks(search);
     }
 
     private static void menuString() {
