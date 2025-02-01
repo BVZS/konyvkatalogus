@@ -1,5 +1,7 @@
 package hu.soter.model;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+
 public class User {
     private int id;
     private String username;
@@ -11,6 +13,10 @@ public class User {
         this.username = username;
         this.password = password;
         this.role = role;
+    }
+
+    public static String hashPassword(String password) {
+        return BCrypt.withDefaults().hashToString(12, password.toCharArray());
     }
 
     public int getId() {
