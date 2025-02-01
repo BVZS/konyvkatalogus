@@ -1,0 +1,35 @@
+package hu.soter.modell;
+
+import java.util.HashSet;
+import java.util.Set;
+
+public class Book extends Item {
+    private Set<String> authors;
+    private int publicationYear;
+    private double price;
+
+    public Book() {
+        super("Ismeretlen Cím");
+        this.authors = new HashSet<>();
+        this.publicationYear = 0;
+        this.price = 0.0;
+    }
+
+    public Book(String title, Set<String> authors, int publicationYear, double price) {
+        super(title);
+        this.authors = authors;
+        this.publicationYear = publicationYear;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "authors=" + authors +
+                ", publicationYear=" + publicationYear +
+                ", price=" + price +
+                ", id=" + id +
+                ", title='" + title + '\'' +
+                '}';
+    }
+}
