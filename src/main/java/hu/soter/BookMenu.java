@@ -48,7 +48,7 @@ public class BookMenu {
                     saveToFile();
                     break;
                 case 6:
-                    //loadFromFile();
+                    loadFromFile();
                     break;
                 case 7:
                     //saveToDatabase();
@@ -132,6 +132,18 @@ public class BookMenu {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+        }
+    }
+
+    private static void loadFromFile() {
+        System.out.println("Írd be a fájl pontos nevét a betöltéshez:");
+        String fileName = scanner.nextLine();
+
+        try {
+            catalog.loadFromTextFile(fileName);
+            System.out.println("Könyvek betöltése sikeresen megtörtént.");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
