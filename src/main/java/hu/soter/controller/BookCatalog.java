@@ -12,6 +12,10 @@ public class BookCatalog {
         this.list = new ArrayList<>();
     }
 
+    public ArrayList<Book> getList() {
+        return new ArrayList<Book>(list);
+    }
+
     public void addBook(Book book) {
         list.add(book);
     }
