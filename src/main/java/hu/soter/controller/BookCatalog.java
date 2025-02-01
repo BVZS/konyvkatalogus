@@ -3,6 +3,7 @@ package hu.soter.controller;
 import hu.soter.modell.Book;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class BookCatalog {
@@ -48,6 +49,24 @@ public class BookCatalog {
                 System.out.println(book);
             }
         }
+    }
+
+    public void sortByPrice() {
+        list.sort(new Comparator<Book>() {
+            @Override
+            public int compare(Book b1, Book b2) {
+                return Double.compare(b1.getPrice(), b2.getPrice());
+            }
+        });
+    }
+
+    public void sortByPublicationYear() {
+        list.sort(new Comparator<Book>() {
+            @Override
+            public int compare(Book b1, Book b2) {
+                return Integer.compare(b1.getPublicationYear(), b2.getPublicationYear());
+            }
+        });
     }
 
 

@@ -35,6 +35,11 @@ public class Book extends Item {
     }
 
     @Override
+    public int compareTo(Book other) {
+        return this.title.compareTo(other.title);
+    }
+
+    @Override
     public String toString() {
         return "Book{" +
                 "authors=" + authors +

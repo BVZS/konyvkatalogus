@@ -39,4 +39,6 @@ public abstract class Item implements CatalogItem {
     public boolean matches(String keyword) {
         return title.toLowerCase().contains(keyword.toLowerCase());
     }
+
+    public abstract int compareTo(Book other);
 }
