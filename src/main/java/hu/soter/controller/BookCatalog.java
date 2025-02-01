@@ -2,9 +2,8 @@ package hu.soter.controller;
 
 import hu.soter.modell.Book;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class BookCatalog {
     private ArrayList<Book> list;
@@ -67,6 +66,44 @@ public class BookCatalog {
                 return Integer.compare(b1.getPublicationYear(), b2.getPublicationYear());
             }
         });
+    }
+
+    public void saveToTextFile(String filename) throws IOException {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))) {
+            for (Book book : list) {
+                writer.write(book.getTitle() + ";" + String.join(",", book.getAuthors()) + ";" +
+                        book.getPublicationYear() + ";" + book.getPrice());
+                writer.newLine();
+            }
+        }
+    }
+
+    public void loadFromTextFile(String filename) throws IOException {
+        list.clear();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(";");
+                String title = parts[0];
+                Set<String> authors = new HashSet<>(Arrays.asList(parts[1].split(",")));
+                int publicationYear = Integer.parseInt(parts[2]);
+                double price = Double.parseDouble(parts[3]);
+                Book book = new Book(title, authors, publicationYear, price);
+                list.add(book);
+            }
+        }
+    }
+
+    public void saveToBinaryFile(String filename) throws IOException {
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))) {
+            out.writeObject(list);
+        }
+    }
+
+    public void loadFromBinaryFile(String filename) throws IOException, ClassNotFoundException {
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(filename))) {
+            list = (ArrayList<Book>) in.readObject();
+        }
     }
 
 

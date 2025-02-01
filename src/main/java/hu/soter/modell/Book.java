@@ -1,9 +1,12 @@
 package hu.soter.modell;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Book extends Item {
+public class Book extends Item implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private Set<String> authors;
     private int publicationYear;
     private double price;
