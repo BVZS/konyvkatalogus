@@ -1,6 +1,7 @@
 package hu.soter.controller;
 
 import hu.soter.model.Book;
+import hu.soter.model.Role;
 import hu.soter.model.User;
 
 import java.sql.*;
@@ -85,7 +86,8 @@ public class Database {
                 int id = rs.getInt("id");
                 String username = rs.getString("username");
                 String password = rs.getString("password");
-                String role = rs.getString("role");
+                String roleStr = rs.getString("role");
+                Role role = Role.valueOf(roleStr);
 
                 User user = new User(id, username, password, role);
                 users.add(user);
@@ -106,13 +108,31 @@ public class Database {
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     int id = rs.getInt("id");
-                    String role = rs.getString("role");
+                    String roleStr = rs.getString("role");
+                    Role role = Role.valueOf(roleStr);
                     return new User(id, username, password, role);
                 } else {
                     return null;
                 }
             }
+
         }
+    }
+
+    public boolean isAdmin(String username) {
+        String query = "SELECT role FROM users WHERE username = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String role = rs.getString("role");
+                return "ADMIN".equals(role);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }

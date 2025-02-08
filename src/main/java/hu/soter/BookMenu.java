@@ -6,6 +6,7 @@ import hu.soter.model.Book;
 import hu.soter.model.User;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -192,6 +193,7 @@ public class BookMenu {
 
             if (user != null) {
                 System.out.println("Sikeres bejelentkezés! Üdvözöljük, " + user.getUsername());
+                System.out.println(user.getRole());
             } else {
                 System.out.println("Hibás felhasználónév vagy jelszó!");
             }
