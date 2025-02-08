@@ -18,9 +18,9 @@ CREATE TABLE `books` (
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `username` varchar(255) NOT NULL,
+  `username` varchar(30) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role` varchar(255) NOT NULL
+  `role` enum('ADMIN','USER','GUEST') NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci;
 
 ALTER TABLE `books`
@@ -31,12 +31,11 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `username` (`username`);
 
 ALTER TABLE `books`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
-
 ```
 
 Az adatbázis elkészítése után szúrjunk be egy felhasználót, hogy tudjuk kezelni a programot.
