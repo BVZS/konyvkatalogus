@@ -18,6 +18,7 @@ public class BookMenu {
     private static Database databaseController = new Database();
     private static Scanner scanner = new Scanner(System.in);
     private static BookCatalog catalog = new BookCatalog();
+    private static User user;
 
     public static void load() {
         login();
@@ -64,6 +65,11 @@ public class BookMenu {
     }
 
     private static void addBook() {
+        if (!databaseController.isAdmin(user.getUsername())) {
+            System.out.println("Nincs jogosultságod új könyv létrehozásához!");
+            return;
+        }
+
         System.out.print("Add meg a könyv címét: ");
         String title = scanner.nextLine();
 
@@ -92,6 +98,11 @@ public class BookMenu {
     }
 
     private static void deleteBook() {
+        if (!databaseController.isAdmin(user.getUsername())) {
+            System.out.println("Nincs jogosultságod könyvek törlésére!");
+            return;
+        }
+
         if (catalog.getList().isEmpty()) {
             System.out.println("Nincsenek könyvek.");
         } else {
@@ -105,6 +116,11 @@ public class BookMenu {
     }
 
     private static void listBooks() {
+        if (!databaseController.isAdmin(user.getUsername()) && !databaseController.isUser(user.getUsername()) && !databaseController.isGuest(user.getUsername())) {
+            System.out.println("Nincs jogosultságod könyvek listázására!");
+            return;
+        }
+
         if (catalog.getList().isEmpty()) {
             System.out.println("Nincsenek könyvek.");
         } else {
@@ -113,12 +129,22 @@ public class BookMenu {
     }
 
     private static void searchBook() {
+        if (!databaseController.isAdmin(user.getUsername()) && !databaseController.isUser(user.getUsername())) {
+            System.out.println("Nincs jogosultságod könyvek keresésére!");
+            return;
+        }
+
         System.out.println("Írd be a könyv szerzőjét vagy címét, amit keresel:");
         String search = scanner.nextLine();
         catalog.searchBooks(search);
     }
 
     private static void saveToFile() {
+        if (!databaseController.isAdmin(user.getUsername())) {
+            System.out.println("Nincs jogosultságod fájlba mentésre!");
+            return;
+        }
+
         if (catalog.getList().isEmpty()) {
             System.out.println("Nincsenek könyvek.");
         } else {
@@ -137,6 +163,11 @@ public class BookMenu {
     }
 
     private static void loadFromFile() {
+        if (!databaseController.isAdmin(user.getUsername())) {
+            System.out.println("Nincs jogosultságod fájlból való betöltéshez!");
+            return;
+        }
+
         System.out.println("Írd be a fájl pontos nevét a betöltéshez:");
         String fileName = scanner.nextLine();
         try {
@@ -148,6 +179,11 @@ public class BookMenu {
     }
 
     private static void saveToDatabase() {
+        if (!databaseController.isAdmin(user.getUsername())) {
+            System.out.println("Nincs jogosultságod adatbázisba mentésre!");
+            return;
+        }
+
         if (catalog.getList().isEmpty()) {
             System.out.println("Nincsenek könyvek.");
         } else {
@@ -189,7 +225,7 @@ public class BookMenu {
             System.out.print("Jelszó: ");
             String password = scanner.nextLine();
 
-            User user = authenticate(username, password);
+            user = authenticate(username, password);
 
             if (user != null) {
                 System.out.println("Sikeres bejelentkezés! Üdvözöljük, " + user.getUsername());

@@ -135,4 +135,36 @@ public class Database {
         return false;
     }
 
+    public boolean isUser(String username) {
+        String query = "SELECT role FROM users WHERE username = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String role = rs.getString("role");
+                return "USER".equals(role);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean isGuest(String username) {
+        String query = "SELECT role FROM users WHERE username = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setString(1, username);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                String role = rs.getString("role");
+                return "GUEST".equals(role);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
 }
