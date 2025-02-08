@@ -6,6 +6,8 @@ import hu.soter.model.User;
 import java.sql.*;
 import java.util.*;
 
+import static hu.soter.model.User.hashPassword;
+
 public class Database {
     private Connection connection;
 
@@ -93,6 +95,9 @@ public class Database {
     }
 
     public User authenticate(String username, String password) throws SQLException {
+
+        password = hashPassword(password);
+
         String query = "SELECT * FROM users WHERE username = ? AND password = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setString(1, username);

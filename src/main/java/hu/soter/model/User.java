@@ -1,9 +1,7 @@
 package hu.soter.model;
 
-import de.mkammerer.argon2.Argon2;
-import de.mkammerer.argon2.Argon2Factory;
-
-import java.util.Arrays;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class User {
     private int id;
@@ -18,10 +16,23 @@ public class User {
         this.role = role;
     }
 
-    /*public static String hashPassword(String password) {
-        Argon2 argon2 = Argon2Factory.create();
-        return argon2.hash(10, 65536, 1, Arrays.toString(password.getBytes()));
-    }*/
+    public static String hashPassword(String pw) {
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            byte[] hash = md.digest(pw.getBytes());
+
+            StringBuilder hexSb = new StringBuilder();
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if(hex.length() == 1) {hexSb.append('0'); }
+                hexSb.append(hex);
+            }
+            return hexSb.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Nem sikerült a jelszó hash-elése!");
+        }
+    }
 
     public int getId() {
         return id;

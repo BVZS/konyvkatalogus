@@ -192,7 +192,6 @@ public class BookMenu {
 
             if (user != null) {
                 System.out.println("Sikeres bejelentkezés! Üdvözöljük, " + user.getUsername());
-
             } else {
                 System.out.println("Hibás felhasználónév vagy jelszó!");
             }
